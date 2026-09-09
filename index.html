@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1f2937" />
+    <title>Wikipedia Entdecker</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Wikipedia Entdecker</h1>
+      <p>Finde automatisch aktuelle Wikipedia-Artikel.</p>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <h2>Suche</h2>
+        <form id="search-form">
+          <label for="query-input" class="visually-hidden">Artikel suchen</label>
+          <input
+            id="query-input"
+            name="query"
+            type="search"
+            placeholder="Suchbegriff eingeben..."
+            autocomplete="off"
+            required
+          />
+          <button type="submit">Suchen</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title-row">
+          <h2>Aktuelle Vorschläge</h2>
+          <button id="refresh-suggestions" type="button">Aktualisieren</button>
+        </div>
+        <p id="suggestions-status" class="status" aria-live="polite"></p>
+        <ul id="suggestions-list" class="card-list"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Suchergebnisse</h2>
+        <p id="search-status" class="status" aria-live="polite"></p>
+        <ul id="search-results" class="card-list"></ul>
+      </section>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
