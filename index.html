@@ -15,6 +15,8 @@
   :root[data-theme="dark"] { color-scheme: dark; --bg: #121212; --surface: #1e1e1e; --text: #e0e0e0; --border: #3a3a3a; --link: #8ab4f8; --hover: #2c2c2c; --current: #263a5a; --muted: #9aa0a6; }
   :root[data-theme="dark"] #content [style*="background"] { background: transparent !important; color: inherit !important; }
   :root[data-theme="dark"] #content img { opacity: .85; }
+  :root[data-theme="dark"] #content img:not([src*="/math/"]) { background: #fff; border-radius: 3px; opacity: .9; }
+  :root[data-theme="dark"] #content img[src*="/math/"], :root[data-theme="dark"] #content .mwe-math-fallback-image-inline { filter: invert(1) hue-rotate(180deg); background: transparent; opacity: 1; }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
   header { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
@@ -165,7 +167,14 @@ content.addEventListener('click', e => {
   const a = e.target.closest('a');
   if (!a) return;
   e.preventDefault();
-  const m = a.getAttribute('href') && a.getAttribute('href').match(/^\/wiki\/([^#?:]+)/);
+  const href = a.getAttribute('href') || '';
+  if (href.startsWith('#')) {
+    const id = decodeURIComponent(href.slice(1));
+    const target = [...content.querySelectorAll('[id]')].find(el => el.id === id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  const m = href.match(/^\/wiki\/([^#?:]+)/);
   if (m) goNext(decodeURIComponent(m[1]).replace(/_/g, ' '));
 });
 
